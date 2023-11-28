@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PDFController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +24,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('proyectos', ProyectoController::class);
+Route::resource('materias', MateriaController::class);
+
+//pdf
+Route::get('/proyectos/pdf', [ProyectoController::class, 'generatePDF'])->name('proyectos.pdf')->middleware('auth');
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate.pdf')->middleware('auth');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
